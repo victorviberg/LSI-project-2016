@@ -18,6 +18,8 @@ using namespace std;
 int main(int, char**)
 {
 
+	cv::namedWindow("edges", 1);
+
 	cout << "First sentence." << endl;
 	cout << "test";
 	cout << "Hello!";
