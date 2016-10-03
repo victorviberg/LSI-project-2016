@@ -3,7 +3,7 @@
 #include<opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
-//#include "FlyCapture2.h" //This one will give errors unless drivers and sdk for camera is installed.
+//#include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
 
 #include<iostream>
 #include <chrono>
