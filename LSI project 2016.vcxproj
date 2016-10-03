@@ -117,11 +117,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonClass.cpp" />
+    <ClCompile Include="FrameClass.cpp" />
+    <ClCompile Include="GUIclass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Free-Functions.cpp" />
+    <ClCompile Include="ROIclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonClass.h" />
+    <ClInclude Include="FrameClass.h" />
     <ClInclude Include="Free-Functions.h" />
+    <ClInclude Include="GUIclass.h" />
+    <ClInclude Include="ROIclass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
