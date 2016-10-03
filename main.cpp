@@ -23,8 +23,8 @@ int main(int, char**)
 	cout << "Hello!";
 	cout << "A second sentence.";
 	cout << "A third sentence.";
-	Sleep(10000);
-	Sleep(100); //Must snooze
+
+	cv::waitKey(0);
 	return(0);
 
 }
