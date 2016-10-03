@@ -20,6 +20,8 @@ int main(int, char**)
 
 	cout << "First sentence." << endl;
 	cout << "test";
+	cout << "Hello!";
+	Sleep(10000);
 	return(0);
 
 }
