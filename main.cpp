@@ -3,7 +3,7 @@
 #include<opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
-//#include "FlyCapture2.h"
+//#include "FlyCapture2.h" //This one will give errors unless drivers and sdk for camera is installed.
 
 #include<iostream>
 #include <chrono>
@@ -17,14 +17,18 @@ using namespace std;
 
 int main(int, char**)
 {
-
-	cv::namedWindow("edges", 1);
+	cv::Mat image;
+	cv::namedWindow("Fönster", 1);
 
 	cout << "First sentence." << endl;
 	cout << "test";
 	cout << "Hello!";
 	cout << "A second sentence.";
 	cout << "A third sentence.";
+
+
+	image = cv::imread("image.jpg");
+	cv::imshow("Fönster",image);
 
 	cv::waitKey(0);
 	return(0);
