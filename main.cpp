@@ -22,6 +22,7 @@ int main(int, char**)
 	cout << "test";
 	cout << "Hello!";
 	cout << "A second sentence.";
+	cout << "A third sentence.";
 	Sleep(10000);
 	Sleep(100); //Must snooze
 	return(0);
