@@ -3,6 +3,8 @@
 //#include<opencv2/imgproc/imgproc.hpp>
 //#include<opencv/cv.h>
 
+//#include "FlyCapture2.h"
+
 #include<iostream>
 #include <chrono>
 #include <time.h>
