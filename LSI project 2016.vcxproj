@@ -123,6 +123,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Free-Functions.cpp" />
     <ClCompile Include="ROIclass.cpp" />
+    <ClCompile Include="Test-Function.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ButtonClass.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Free-Functions.h" />
     <ClInclude Include="GUIclass.h" />
     <ClInclude Include="ROIclass.h" />
+    <ClInclude Include="Test-Function.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

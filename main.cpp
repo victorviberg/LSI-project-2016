@@ -3,34 +3,27 @@
 #include<opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
-//#include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
+#include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
 
 #include<iostream>
 #include <chrono>
 #include <time.h>
 #include <thread>
 #include <windows.h>
-#include<conio.h>           
+#include<conio.h> 
+
+#include"Test-Function.h"
+
 using namespace std;
+using namespace FlyCapture2; //This one will give errors unless camera thingy is fixed
 //using namespace cv;
 
 
 int main(int, char**)
 {
-	cv::Mat image;
-	cv::namedWindow("Fönster", 1);
 
-	cout << "First sentence." << endl;
-	cout << "test";
-	cout << "Hello!";
-	cout << "A second sentence.";
-	cout << "A third sentence.";
-
-
-	image = cv::imread("image.jpg");
-	cv::imshow("Fönster",image);
-
-	cv::waitKey(0);
+	CameraLoopOther();
+	//oldMain();
 	return(0);
 
 }
