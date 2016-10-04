@@ -89,12 +89,12 @@ void CameraLoopOther()
 		imshow("Camera_Output", frame); //Displays the frame in our window
 	
 		key = cv::waitKey(10); //Checks for key presses and waits 10mS, if argument 0 is given it pauses until key is pressed.
-		if (key == 's') //To save the image
+		if (key == 's') //To save the image press s
 		{
 			cin >> filename; //Press the command window and type
 			filename = "images\\" + filename + ".png";
 			cv::imwrite(filename,frame);
-
+			key = 'i';
 		}
 
 
