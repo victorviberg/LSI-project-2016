@@ -22,7 +22,7 @@ using namespace FlyCapture2; //This one will give errors unless camera thingy is
 int main(int, char**)
 {
 
-	CameraLoopOther();
+	CameraLoopBW();
 	//oldMain();
 	return(0);
 

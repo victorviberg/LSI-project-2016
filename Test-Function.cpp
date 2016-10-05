@@ -80,24 +80,40 @@ void CameraLoopOther()
 	char key; //This will be used to shut down the loop, keeps track of which button is pressed
 	std::string filename;
 	cvNamedWindow("Camera_Output", 1); //The window we show the images in
+	bool record;
+	int width;
+	int height;
 
+	width = capture.get(CV_CAP_PROP_FRAME_WIDTH);
+	height = capture.get(CV_CAP_PROP_FRAME_HEIGHT);
+	cout << width << "    " << height;
+	
+	cv::VideoWriter video("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(width, height), true);
+	video.open("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(width, height), true);
+
+	record = false; 
 	key = 'i'; //Something else then q
 	while (key != 'q') //Loop until q is pressed
 	{
 		capture >> frame; //Takes a picture from the camera to the work memory
 		//capture >> frame; //pause/delay/waiting causes some problems which are solved by doing this twice.
 		imshow("Camera_Output", frame); //Displays the frame in our window
-	
+
 		key = cv::waitKey(10); //Checks for key presses and waits 10mS, if argument 0 is given it pauses until key is pressed.
 		if (key == 's') //To save the image press s
 		{
 			cin >> filename; //Press the command window and type
 			filename = "images\\" + filename + ".png";
 			cv::imwrite(filename,frame);
-			key = 'i';
 		}
-
-
+		if (key == 'v')
+		{
+			record = !record;
+		}
+		if (record)
+		{
+			video.write(frame);
+		}
 	}
 
 	return;
@@ -115,6 +131,14 @@ void CameraLoopBW()
 	Image rgbImage;
 	Image rawImage;
 
+	bool record;
+	std::string filename;
+
+	cv::VideoWriter video("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(800, 600), true);
+	video.open("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(800, 600), true);
+
+	record = false;
+
 	camera.Connect(0);
 	camera.StartCapture();
 	key = 'i';
@@ -122,13 +146,29 @@ void CameraLoopBW()
 	{
 		camera.RetrieveBuffer(&rawImage);
 		rawImage.Convert(FlyCapture2::PIXEL_FORMAT_BGR, &rgbImage);
-
 		unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize() / (double)rgbImage.GetRows(); //Converts the Image to Mat
 		cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(), rowBytes);
-
 		cv::Mat smallimage; //To resize the image, until we figure out how to take smaller pictures 
 		cv::resize(image, smallimage, cv::Size(800, 600), 0, 0, cv::INTER_CUBIC);
-		imshow("Camera_Output", image);
+		imshow("Camera_Output", smallimage);
+		key = cv::waitKey(10);
+
+		if (key == 's') //To save the image press s
+		{
+			cin >> filename; //Press the command window and type
+			filename = "images\\" + filename + ".png";
+			cv::imwrite(filename, smallimage);
+		}
+		if (key == 'v')
+		{
+			record = !record;
+		}
+		if (record)
+		{
+			cout << "sd";
+			video.write(smallimage);
+		}
+
 
 
 
