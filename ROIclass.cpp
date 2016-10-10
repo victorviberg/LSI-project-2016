@@ -7,7 +7,7 @@ void ROI::Set_ROI_Location(vector<int> New_ROI_Location) {
 	ROI_Location = New_ROI_Location;
 }
 
-void ROI::Set_ROI_Region(Mat New_ROI_Region) {
+void ROI::Set_ROI_Region(vector<int> New_ROI_Region) {
 	ROI_Region = New_ROI_Region;
 }
 
@@ -17,6 +17,6 @@ vector<int> ROI::Get_ROI_Location() {
 }
 
 
-Mat ROI::Get_ROI_Region() {
+vector<int> ROI::Get_ROI_Region() {
 	return(ROI_Region);
 }

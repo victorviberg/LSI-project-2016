@@ -13,10 +13,10 @@ using namespace cv;
 class ROI {
 private:
 	vector<int> ROI_Location;
-	Mat ROI_Region;
+	vector<int> ROI_Region;
 public:
 	void Set_ROI_Location(vector<int>);
-	void Set_ROI_Region(Mat);
+	void Set_ROI_Region(vector<int>);
 	vector<int> Get_ROI_Location();
-	Mat Get_ROI_Region();
+	vector<int> Get_ROI_Region();
 };
