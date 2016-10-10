@@ -3,7 +3,6 @@ The Frame class and its functions are written here.
 */
 #pragma once
 #include <iostream>
-#include <list>
 #include "FrameClass.h"
 #include <opencv/cv.h>
 using namespace std;

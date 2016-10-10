@@ -6,11 +6,6 @@ The Frame class and its public functions are declared here.
 using namespace std;
 using namespace cv; // Alexandra: Mat is a data type in openCV, so we need to include cv here
 
-// These two are just temporary because I don't know 
-// what dimensions an image matrix will have. //Camilla
-static const int Image_Height = 3;
-static const int Image_Width = 3;
-
 
 class Frame {
 private:
