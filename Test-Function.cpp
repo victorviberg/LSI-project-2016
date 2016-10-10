@@ -13,6 +13,7 @@
 #include<conio.h> 
 
 #include"Test-Function.h"
+#include"Free-Functions.h"
 
 using namespace std;
 using namespace FlyCapture2; //This one will give errors unless camera thingy is fixed
@@ -165,7 +166,6 @@ void CameraLoopBW()
 		}
 		if (record)
 		{
-			cout << "sd";
 			video.write(smallimage);
 		}
 
@@ -180,7 +180,85 @@ void CameraLoopBW()
 
 
 
+void TestContrast()
+{
+	cv::Mat frame; //This is a single image
+	cv::Mat contrastmap; //This is the contrast image
+	cv::VideoCapture capture(0); //This is the "camera variable"
+	char key; //This will be used to shut down the loop, keeps track of which button is pressed
+	std::string filename;
+	cvNamedWindow("Camera_Output", 1); //The window we show the images in
+	bool record;
+	int width;
+	int height;
 
+	width = capture.get(CV_CAP_PROP_FRAME_WIDTH);
+	height = capture.get(CV_CAP_PROP_FRAME_HEIGHT);
+	cout << width << "    " << height;
+
+	cv::VideoWriter video("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(width, height), true);
+	video.open("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(width, height), true);
+
+	record = false;
+	key = 'i'; //Something else then q
+	while (key != 'q') //Loop until q is pressed
+	{
+		capture >> frame; //Takes a picture from the camera to the work memory
+						  //capture >> frame; //pause/delay/waiting causes some problems which are solved by doing this twice.
+		contrastmap = CalculateContrast(frame, 5);
+		//cout << " X  " << contrastmap.rows << "   " << " Y " << contrastmap.cols << endl;
+		cv::resize(contrastmap, contrastmap, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);
+		frame = frame + contrastmap;
+		imshow("Camera_Output", frame); //Displays the frame in our window
+
+		key = cv::waitKey(10); //Checks for key presses and waits 10mS, if argument 0 is given it pauses until key is pressed.
+		if (key == 's') //To save the image press s
+		{
+			cin >> filename; //Press the command window and type
+			filename = "images\\" + filename + ".png";
+			cv::imwrite(filename, frame);
+		}
+		if (key == 'v')
+		{
+			record = !record;
+		}
+		if (record)
+		{
+			video.write(frame);
+		}
+	}
+
+	return;
+
+
+
+}
+
+//void TestContrast()
+//{
+//	cv::Mat baseimage = cv::imread("images//finalimage.png");
+//	cv::Mat image;
+//	cv::Mat mapped;
+//	//cv::Mat laserimage = cv::imread("images//laserimage.png");
+//	//cv::Mat finalimage = RemoveAmbientLight(baseimage, laserimage);
+//
+//	//cv::waitKey(0);
+//	//CameraLoopOther();
+//	//oldMain();
+//	cv::Mat test = CalculateContrast(baseimage, 5);
+//	cv::resize(test, image, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+//	cv::namedWindow("Fönster 1", 1);
+//	cv::imshow("Fönster 1", baseimage);
+//	cv::namedWindow("Fönster 2", 1);
+//	cv::imshow("Fönster 2", image);
+//	mapped = image + baseimage;
+//	cv::namedWindow("Fönster 3", 1);
+//	cv::imshow("Fönster 3", mapped);
+//	cv::waitKey(0);
+//
+//
+//
+//}
 
 
 

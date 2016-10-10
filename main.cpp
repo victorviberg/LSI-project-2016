@@ -13,6 +13,7 @@
 #include<conio.h> 
 
 #include"Test-Function.h"
+#include"Free-Functions.h"
 
 using namespace std;
 using namespace FlyCapture2; //This one will give errors unless camera thingy is fixed
@@ -22,8 +23,7 @@ using namespace FlyCapture2; //This one will give errors unless camera thingy is
 int main(int, char**)
 {
 
-	CameraLoopBW();
-	//oldMain();
+	TestContrast();
 	return(0);
 
 }
