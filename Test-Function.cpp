@@ -139,7 +139,7 @@ void CameraLoopBW()
 
 	record = false;
 
-	camera.Connect(0);
+	camera.Connect(-1);
 	camera.StartCapture();
 	key = 'i';
 	while (key != 'q')
