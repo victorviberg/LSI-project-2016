@@ -23,7 +23,7 @@ using namespace FlyCapture2;
 
 
 
-cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage);
+cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int gain);
 
 cv::Mat CalculateContrast(cv::Mat input, int lascaSize);
 

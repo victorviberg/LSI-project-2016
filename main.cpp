@@ -17,13 +17,14 @@
 
 using namespace std;
 using namespace FlyCapture2; //This one will give errors unless camera thingy is fixed
-//using namespace cv;
+using namespace cv;
 
 
 int main(int, char**)
 {
+	//CameraLoopBW();
+	stilltest();
 
-	TestContrast();
 	return(0);
 
 }

@@ -8,6 +8,7 @@ void CameraLoopOther();
 
 void TestContrast();
 
+void stilltest();
 
 
 

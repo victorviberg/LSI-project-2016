@@ -17,7 +17,7 @@
 
 using namespace std;
 using namespace FlyCapture2; //This one will give errors unless camera thingy is fixed
-//using namespace cv;
+using namespace cv;
 
 
 
@@ -149,8 +149,19 @@ void CameraLoopBW()
 		rawImage.Convert(FlyCapture2::PIXEL_FORMAT_BGR, &rgbImage);
 		unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize() / (double)rgbImage.GetRows(); //Converts the Image to Mat
 		cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(), rowBytes);
+
 		cv::Mat smallimage; //To resize the image, until we figure out how to take smaller pictures 
-		cv::resize(image, smallimage, cv::Size(800, 600), 0, 0, cv::INTER_CUBIC);
+		cv::resize(image, smallimage, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+
+		
+		image = smallimage;
+		smallimage = CalculateContrast(smallimage, 15);
+		cvtColor(smallimage, smallimage, cv::COLOR_GRAY2BGR);
+		applyColorMap(smallimage, smallimage, 4);
+		cv::resize(smallimage, smallimage, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+
+
+		imshow("Camera_Output2", image);
 		imshow("Camera_Output", smallimage);
 		key = cv::waitKey(10);
 
@@ -158,7 +169,7 @@ void CameraLoopBW()
 		{
 			cin >> filename; //Press the command window and type
 			filename = "images\\" + filename + ".png";
-			cv::imwrite(filename, smallimage);
+			cv::imwrite(filename, image);
 		}
 		if (key == 'v')
 		{
@@ -187,7 +198,8 @@ void TestContrast()
 	cv::VideoCapture capture(0); //This is the "camera variable"
 	char key; //This will be used to shut down the loop, keeps track of which button is pressed
 	std::string filename;
-	cvNamedWindow("Camera_Output", 1); //The window we show the images in
+	cvNamedWindow("Camera_Output 1", 1); //The window we show the images in
+	cvNamedWindow("Camera_Output 2", 1);
 	bool record;
 	int width;
 	int height;
@@ -206,10 +218,10 @@ void TestContrast()
 		capture >> frame; //Takes a picture from the camera to the work memory
 						  //capture >> frame; //pause/delay/waiting causes some problems which are solved by doing this twice.
 		contrastmap = CalculateContrast(frame, 5);
-		//cout << " X  " << contrastmap.rows << "   " << " Y " << contrastmap.cols << endl;
 		cv::resize(contrastmap, contrastmap, cv::Size(width, height), 0, 0, cv::INTER_CUBIC);
-		frame = frame + contrastmap;
-		imshow("Camera_Output", frame); //Displays the frame in our window
+		//frame = frame + contrastmap;
+		imshow("Camera_Output 1", contrastmap); //Displays the frame in our window
+		imshow("Camera_Output 2", frame);
 
 		key = cv::waitKey(10); //Checks for key presses and waits 10mS, if argument 0 is given it pauses until key is pressed.
 		if (key == 's') //To save the image press s
@@ -233,6 +245,25 @@ void TestContrast()
 
 
 }
+
+void stilltest()
+{
+	Mat image1 = imread("images//bil1.png");
+	Mat image2 = imread("images//bil2.png");
+	Mat image3;
+	Mat image4;
+
+	image3 = RemoveAmbientLight(image1, image2,10);
+	image4 = CalculateContrast(image2, 15);
+	resize(image4, image4, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+	imshow("Speckle", image3);
+	imshow("Kontrast", image4);
+
+	cvWaitKey(0);
+
+}
+
+
 
 //void TestContrast()
 //{
