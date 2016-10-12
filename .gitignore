@@ -240,5 +240,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/images/video.avi
-/ucrtbased.dll
+/libiomp5md.dll

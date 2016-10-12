@@ -6,6 +6,7 @@ void CameraLoopBW();
 
 void CameraLoopOther();
 
+void TestContrast();
 
 
 
