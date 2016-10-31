@@ -125,7 +125,6 @@ void CameraLoopOther()
 void CameraLoopBW()
 {
 	cv::Mat frame; //This is a single image
-	cv::VideoCapture capture(0); //This is the "camera variable"
 	char key; //This will be used to shut down the loop, keeps track of which button is pressed
 	Camera camera;
 
@@ -135,14 +134,34 @@ void CameraLoopBW()
 	bool record;
 	std::string filename;
 
-	cv::VideoWriter video("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(800, 600), true);
-	video.open("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(800, 600), true);
+	cv::VideoWriter video("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(640, 480), true);
+	video.open("images\\video.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(640, 480), true);
 
 	record = false;
 
 	camera.Connect(0);
 	camera.StartCapture();
 	key = 'i';
+
+	string info;
+
+	//Declare a Property struct.
+	Property prop;
+	//Define the property to adjust.
+	prop.type = SHUTTER;
+	//Ensure the property is on.
+	prop.onOff = true;
+	//Ensure auto-adjust mode is off.
+	prop.autoManualMode = false;
+	//Ensure the property is set up to use absolute value control.
+	prop.absControl = true;
+	//Set the absolute value of shutter to X ms.
+	prop.absValue = 20;
+	//Set the property.
+	camera.SetProperty(&prop);
+
+
+
 	while (key != 'q')
 	{
 		camera.RetrieveBuffer(&rawImage);
@@ -177,7 +196,7 @@ void CameraLoopBW()
 		}
 		if (record)
 		{
-			video.write(smallimage);
+			video.write(image);
 		}
 
 
@@ -248,8 +267,8 @@ void TestContrast()
 
 void stilltest()
 {
-	Mat image1 = imread("images//bil1.png");
-	Mat image2 = imread("images//bil2.png");
+	Mat image1 = imread("images//3110_handnolaser_1.png");
+	Mat image2 = imread("images//3110_handwithlaser_1.png");
 	Mat image3;
 	Mat image4;
 

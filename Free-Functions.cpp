@@ -38,7 +38,7 @@ cv::Mat CalculateContrast(cv::Mat input, int lascaSize) //There is some(read alo
 {
 
 	int H = input.rows/lascaSize; //Needs a way to make sure size is divisible by lascaSize
-	int W = input.cols/lascaSize; //As of now these are abit misleading
+	int W = input.cols/lascaSize; //As of now these are a bit misleading
 
 	cv::Mat perfusionimage = cv::Mat::ones(H, W, CV_8U);
 
@@ -65,11 +65,6 @@ cv::Mat CalculateContrast(cv::Mat input, int lascaSize) //There is some(read alo
 	//cout << k;
 	return perfusionimage;
 }
-
-
-
-
-
 
 
 
