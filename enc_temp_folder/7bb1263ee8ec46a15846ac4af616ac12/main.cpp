@@ -23,7 +23,7 @@ using namespace cv;
 int main(int, char**)
 {
 	//CameraLoopBW();
-	//CameraLoopOther();
+	CameraLoopOther();
 	//stilltest();
 
 	return(0);

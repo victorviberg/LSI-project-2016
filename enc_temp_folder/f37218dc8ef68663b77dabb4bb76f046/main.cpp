@@ -24,7 +24,7 @@ int main(int, char**)
 {
 	//CameraLoopBW();
 	//CameraLoopOther();
-	//stilltest();
+	stilltest();
 
 	return(0);
 
