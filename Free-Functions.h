@@ -17,13 +17,12 @@ This document contains declarations of all functions not bound to a specific cla
 #include<conio.h> 
 
 #include"Test-Function.h"
-
 using namespace std;
 using namespace FlyCapture2;
 
 
 
-cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int gain);
+cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int threshhold);
 
 cv::Mat CalculateContrast(cv::Mat input, int lascaSize);
 

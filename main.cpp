@@ -22,9 +22,9 @@ using namespace cv;
 
 int main(int, char**)
 {
-	CameraLoopBW();
+	//CameraLoopBW();
 	//TestContrast();
-	//stilltest();
+	stilltest2();
 
 	return(0);
 

@@ -10,6 +10,8 @@ void TestContrast();
 
 void stilltest();
 
+void stilltest2();
+
 
 
 

@@ -23,13 +23,13 @@ using namespace FlyCapture2;
 using namespace cv;
 
 
-//Substracts each pixel value in one images from the corresponding pixel value in another
-cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int gain)
+//Substracts each pixel value in one images from the corresponding pixel value in another. Threshold is the lowset pixel value that is retained.
+cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int threshhold)
 {
 	cv::Mat result;
 
 	result = laserimage - baseimage;
-	result = result*gain;
+	threshold(result, result, threshhold, 0, THRESH_TOZERO);
 
 	return result;
 }

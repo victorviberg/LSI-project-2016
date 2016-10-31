@@ -283,6 +283,23 @@ void stilltest()
 }
 
 
+void stilltest2()
+{
+	Mat image1 = imread("images//3110_handnolaser_1.png");
+	Mat image2 = imread("images//3110_handwithlaser_1.png");
+	Mat image3;
+	Mat image4;
+
+	image3 = RemoveAmbientLight(image1, image2, 0);
+	image4 = CalculateContrast(image2, 15);
+	resize(image4, image4, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+	imshow("Speckle", image3);
+	imshow("Kontrast", image2);
+
+	cvWaitKey(0);
+
+}
+
 
 //void TestContrast()
 //{
