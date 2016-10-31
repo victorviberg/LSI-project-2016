@@ -22,7 +22,8 @@ using namespace cv;
 
 int main(int, char**)
 {
-	//CameraLoopBW();
+	CameraLoopBW();
+	//CameraLoopOther();
 	stilltest();
 
 	return(0);
