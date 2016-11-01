@@ -28,6 +28,6 @@ void Button::Set_Position(vector<int> New_Position) {
 }
 
 //void Set_Button_Function(Function);
-void Button::Set_Button_Function() {	 
-
+void Button::Set_Button_Function(function<void ()> Button_Func) {
+	Button_Function = Button_Func; 
 }
