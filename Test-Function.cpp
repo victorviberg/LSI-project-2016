@@ -11,6 +11,7 @@
 #include <thread>
 #include <windows.h>
 #include<conio.h> 
+#include <vector>
 
 #include"Test-Function.h"
 #include"Free-Functions.h"
@@ -301,6 +302,24 @@ void stilltest2()
 }
 
 
+void filtertest()
+{
+	vector<Mat> vektor;
+	
+	vektor.push_back(imread("images//bild1.png"));
+	vektor.push_back(imread("images//bild2.png"));
+	vektor.push_back(imread("images//bild3.png"));
+	vektor.push_back(imread("images//bild4.png"));
+	vektor.push_back(imread("images//bild5.png"));
+
+	Mat image = TemporalFiltering(vektor);
+	
+	imshow("Speckle", image);
+	cvWaitKey();
+
+}
+
+
 //void TestContrast()
 //{
 //	cv::Mat baseimage = cv::imread("images//finalimage.png");
@@ -328,5 +347,28 @@ void stilltest2()
 //}
 
 
+void testFrame()
+{
+	Frame a("test", 640, 480);
+	Mat temp;
+	a.Set_Filter_Window_Size(5);
 
+	for (int k = 1; k < 100; k++)
+	{
+		if (k % 2 == 0)
+		{
+			//cout << k << endl;
+			a.Add_Contrast_Image(imread("images//bild1.png"));
+			a.Set_Base_Image(imread("images//bild2.png"));
+		}
+		else
+		{ 
+			a.Add_Contrast_Image(imread("images//bild2.png"));
+			a.Set_Base_Image(imread("images//bild1.png"));
+		}
+
+		a.Save_Frame();
+	}
+
+}
 

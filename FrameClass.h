@@ -3,6 +3,8 @@ The Frame class and its public functions are declared here.
 */
 #pragma once
 #include <opencv/cv.h>
+#include "Free-Functions.h"
+
 using namespace std;
 using namespace cv; // Alexandra: Mat is a data type in openCV, so we need to include cv here
 
@@ -17,6 +19,14 @@ private:
 	Mat Time_Averaged_Image;
 	Mat Contrast_Image;
 	Mat Perfusion_Image;
+	int Filter_Window_Size;
+	vector<Mat> Contrast_Images;
+	string Averaged_Contrast_Filename;
+	string Base_Filename;
+	VideoWriter Video_Contrast;
+	VideoWriter Video_Base;
+	int Width;
+	int Height;
 
 public:
 	void Set_Exposure_Times(vector<int>);
@@ -33,6 +43,14 @@ public:
 	Mat Get_Base_Image();
 	Mat Get_Laser_Image();
 	void Save_Frame();
+	void Add_Contrast_Image(Mat Contrast_Image);
+	void Set_Filter_Window_Size(int value);
+	void Set_Filename(string File_Name);
+
+
+	//Constructor
+	Frame(string File_Name, int Width, int Height);
+
 
 };
 

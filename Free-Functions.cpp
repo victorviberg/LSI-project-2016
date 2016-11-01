@@ -66,7 +66,21 @@ cv::Mat CalculateContrast(cv::Mat input, int lascaSize) //There is some(read alo
 	return perfusionimage;
 }
 
+cv::Mat TemporalFiltering(vector<cv::Mat> input)
+{
 
+	Mat result;
+	result = input[0]/ input.size();
+	
+
+	for (unsigned int k = 1; k <= input.size() -1 ; k++)
+	{
+		result = result + input[k]/ input.size();
+	}
+
+
+	return result;
+}
 
 
 

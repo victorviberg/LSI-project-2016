@@ -25,7 +25,8 @@ int main(int, char**)
 	//CameraLoopBW();
 	//CameraLoopOther();
 	//stilltest();
-
+	//filtertest();
+	testFrame();
 	return(0);
 
 }
