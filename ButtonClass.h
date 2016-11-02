@@ -14,13 +14,17 @@ private:
 	int Height;
 	int Width;
 	vector<int> Position;
-	function<void()> Button_Function; // Variable containing the button specific function.
 
 public:
+	function<void()> Button_Function; // Variable containing the button specific function.
+
 	void Set_Name(string);
 	void Set_Height(int);
 	void Set_Width(int);
 	void Set_Position(vector<int>);
 	void Set_Button_Function(function<void()>);	 //void Set_Button_Function(Function);
-	// Need constructor(s).
+
+	// Constructors
+	Button(string Name, int Height, int Width, vector<int> Position, function<void()> Button_Func);
+	Button();
 };
