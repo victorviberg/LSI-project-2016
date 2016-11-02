@@ -4,6 +4,7 @@ This is where the Button class is declared.
 */
 #pragma once
 #include <opencv/cv.h>
+#include <thread>
 using namespace std;
 using namespace cv;
 
@@ -13,12 +14,13 @@ private:
 	int Height;
 	int Width;
 	vector<int> Position;
-	void Button_Function();
+	function<void()> Button_Function; // Variable containing the button specific function.
 
 public:
 	void Set_Name(string);
 	void Set_Height(int);
 	void Set_Width(int);
 	void Set_Position(vector<int>);
-	void Set_Button_Function();	 //void Set_Button_Function(Function);
+	void Set_Button_Function(function<void()>);	 //void Set_Button_Function(Function);
+	// Need constructor(s).
 };
