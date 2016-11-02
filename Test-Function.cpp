@@ -349,11 +349,11 @@ void filtertest()
 
 void testFrame()
 {
-	Frame a("test", 640, 480);
+	Frame a("test", 640, 480,"Webcam",5);
 	Mat temp;
 	a.Set_Filter_Window_Size(5);
 
-	for (int k = 1; k < 100; k++)
+	for (int k = 1; k < 5; k++)
 	{
 		if (k % 2 == 0)
 		{
@@ -372,3 +372,20 @@ void testFrame()
 
 }
 
+
+void testcapture()
+{
+	Frame a("test", 640, 480, "Webcam",5);
+	a.Take_Picture("BaseImage");
+	Mat temp1 = a.Get_Base_Image();
+	imshow("test2", temp1);
+	cvWaitKey(0);
+	a.Take_Picture("LaserImage");
+
+	Mat temp2 = a.Get_Contrast_Image();
+	imshow("test1", temp2);
+	cvWaitKey();
+
+
+
+}

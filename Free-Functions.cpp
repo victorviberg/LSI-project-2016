@@ -63,6 +63,7 @@ cv::Mat CalculateContrast(cv::Mat input, int lascaSize) //There is some(read alo
 
 	}
 	//cout << k;
+	resize(perfusionimage, perfusionimage, cv::Size(input.cols, input.rows), 0, 0, cv::INTER_CUBIC);
 	return perfusionimage;
 }
 

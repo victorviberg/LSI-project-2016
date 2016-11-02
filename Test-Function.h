@@ -18,6 +18,8 @@ void filtertest();
 
 void testFrame();
 
+void testcapture();
+
 
 
 

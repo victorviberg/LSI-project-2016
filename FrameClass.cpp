@@ -97,11 +97,56 @@ void Frame::Save_Frame()
 	Video_Contrast.write(Contrast_Image);
 }
 
+void Frame::Take_Picture(string Type)
+{
+	if (Which_Camera == "Webcam")
+	{
+		Web_Cam >> Temp_Matrix; //Double since it interacts wierdly with pauses.
+		Web_Cam >> Temp_Matrix;
+		if (Type == "BaseImage")
+		{
+			Base_Image = Temp_Matrix;
+		}
+		else if (Type == "LaserImage")
+		{
+			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
+			Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
+			Add_Contrast_Image(Temp_Matrix);
+		}
+
+
+	}
+	else if (Which_Camera == "Fly") //This is untested. It alsod needs some renaming.
+	{
+
+		BW_Cam.RetrieveBuffer(&rawImage);
+		rawImage.Convert(FlyCapture2::PIXEL_FORMAT_BGR, &rgbImage);
+		unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize() / (double)rgbImage.GetRows(); //Converts the Image to Mat
+		cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(), rowBytes);
+
+		cv::Mat smallimage; //To resize the image, until we figure out how to take smaller pictures 
+		cv::resize(image, smallimage, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
+		Temp_Matrix = smallimage;
+		if (Type =="BaseImage")
+		{ 
+			Base_Image = Temp_Matrix;
+		}
+		else if (Type == "LaserImage")
+		{ 
+			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
+			Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
+			Add_Contrast_Image(Temp_Matrix);
+		}
+
+	}
+
+}
+
 
 //Constructos
-Frame::Frame(string File_Name, int Width, int Height)
+Frame::Frame(string File_Name, int Width, int Height, string Camera, int Lasca_Size)
 {
-
+	Lasca_Area = Lasca_Size;
 	Averaged_Contrast_Filename = "Averaged_Contrast_" + File_Name;
 	Base_Filename = "Base_Filename_" + File_Name;
 
@@ -109,5 +154,18 @@ Frame::Frame(string File_Name, int Width, int Height)
 	Video_Contrast.open("images\\" + Averaged_Contrast_Filename +".avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(Width, Height), true);
 	Video_Base.open("images\\" + Base_Filename +".avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(Width, Height), true);
 
+	Which_Camera = Camera;
+
+	if (Camera == "Webcam")
+	{ 
+		VideoCapture temp(0);
+		Web_Cam = temp;
+	}
+	else if (Camera == "Fly")
+	{
+
+		BW_Cam.Connect(0);
+		BW_Cam.StartCapture();
+	}
 
 }

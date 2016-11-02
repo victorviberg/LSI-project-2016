@@ -27,6 +27,12 @@ private:
 	VideoWriter Video_Base;
 	int Width;
 	int Height;
+	VideoCapture Web_Cam;
+	Camera BW_Cam;
+	string Which_Camera;
+	Mat Temp_Matrix;
+	Image rgbImage;
+	Image rawImage;
 
 public:
 	void Set_Exposure_Times(vector<int>);
@@ -46,10 +52,11 @@ public:
 	void Add_Contrast_Image(Mat Contrast_Image);
 	void Set_Filter_Window_Size(int value);
 	void Set_Filename(string File_Name);
+	void Take_Picture(string Type);
 
 
 	//Constructor
-	Frame(string File_Name, int Width, int Height);
+	Frame(string File_Name, int Width, int Height, string Camera, int Lasca_Size);
 
 
 };
