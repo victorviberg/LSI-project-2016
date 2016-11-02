@@ -13,7 +13,7 @@ using namespace cv;
 class ROI {
 private:
 	vector<int> ROI_Location;
-	vector<int> ROI_Region;
+	vector<int> ROI_Region; // First element width, second height.
 public:
 	void Set_ROI_Location(vector<int>);
 	void Set_ROI_Region(vector<int>);
