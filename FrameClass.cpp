@@ -101,15 +101,18 @@ void Frame::Take_Picture(string Type)
 {
 	if (Which_Camera == "Webcam")
 	{
+
 		Web_Cam >> Temp_Matrix; //Double since it interacts wierdly with pauses.
 		Web_Cam >> Temp_Matrix;
 		if (Type == "BaseImage")
 		{
-			Base_Image = Temp_Matrix;
+			Web_Cam >> Base_Image;
+			Web_Cam >> Base_Image;
 		}
 		else if (Type == "LaserImage")
 		{
-			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
+			cvWaitKey(0);
+			Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
 			Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
 			Add_Contrast_Image(Temp_Matrix);
 		}
@@ -161,9 +164,8 @@ Frame::Frame(string File_Name, int Width, int Height, string Camera, int Lasca_S
 		VideoCapture temp(0);
 		Web_Cam = temp;
 	}
-	else if (Camera == "Fly")
+	else if (Camera == "Fly") //Untested
 	{
-
 		BW_Cam.Connect(0);
 		BW_Cam.StartCapture();
 	}

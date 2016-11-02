@@ -375,6 +375,10 @@ void testFrame()
 
 void testcapture()
 {
+
+	cvNamedWindow("test1", 1);
+	cvNamedWindow("test2", 1);
+
 	Frame a("test", 640, 480, "Webcam",5);
 	a.Take_Picture("BaseImage");
 	Mat temp1 = a.Get_Base_Image();
@@ -384,7 +388,17 @@ void testcapture()
 
 	Mat temp2 = a.Get_Contrast_Image();
 	imshow("test1", temp2);
-	cvWaitKey();
+	cvWaitKey(0);
+
+	a.Take_Picture("BaseImage");
+	Mat temp3 = a.Get_Base_Image();
+	imshow("test2", temp3);
+	cvWaitKey(0);
+	a.Take_Picture("LaserImage");
+
+	Mat temp4 = a.Get_Contrast_Image();
+	imshow("test1", temp4);
+	cvWaitKey(0);
 
 
 
