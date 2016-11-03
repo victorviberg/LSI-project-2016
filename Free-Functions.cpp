@@ -1,27 +1,27 @@
 /*
 This document contains functions not bound to a specific class.
 */
+#pragma once
+
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
 #include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
+#include "Free-Functions.h"
 
 #include<iostream>
 #include <chrono>
 #include <time.h>
-#include <thread>
+//#include <thread>
 #include <windows.h>
 #include<conio.h> 
 
-#include "FrameClass.h"
 
 
 using namespace std;
 using namespace FlyCapture2;
-using namespace cv;
-
 
 //Substracts each pixel value in one images from the corresponding pixel value in another. Threshold is the lowset pixel value that is retained.
 cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int threshhold)
@@ -115,27 +115,28 @@ cv::Mat TemporalFiltering(vector<cv::Mat> input)
 
 
 
-//vector<double> Calc_ROI_Average(Frame Current_Working_Frame, vector<ROI> The_List_Of_ROIs) {
-//	Mat Perfusion_Image = Current_Working_Frame.Get_Perfusion_Image();
-//	vector<double> ROI_Averages;
-//
-//	for (int i = 0; i <= The_List_Of_ROIs.size(); i++)
-//	{
-//		// Calculate the average for ROI i in the vector.
-//		vector<int> Location = The_List_Of_ROIs.at(i).Get_ROI_Location();
-//		vector<int> Region = The_List_Of_ROIs.at(i).Get_ROI_Region();
-//
-//		double Average = 0;
-//		// Calculate average of the rectangular ROIs.
-//		for (int width = 0; width < Region.at(1); width++)
-//		{
-//			for (int height = 0; height < Region.at(2); height++)
-//			{
-//				Average = Average + Perfusion_Image.at<double>(Location.at(1) + width, Location.at(2) + height);
-//			}
-//		}
-//		ROI_Averages.at(i) = Average / (Region.at(1)*Region.at(2));
-//	}
-//	return(ROI_Averages);
-//}
+vector<double> Calc_ROI_Average(Frame *Current_Working_Frame, vector<ROI> The_List_Of_ROIs) 
+{
+	Mat Perfusion_Image = Current_Working_Frame->Get_Perfusion_Image();
+	vector<double> ROI_Averages;
+
+	for (int i = 0; i <= The_List_Of_ROIs.size(); i++)
+	{
+		// Calculate the average for ROI i in the vector.
+		vector<int> Location = The_List_Of_ROIs.at(i).Get_ROI_Location();
+		vector<int> Region = The_List_Of_ROIs.at(i).Get_ROI_Region();
+
+		double Average = 0;
+		// Calculate average of the rectangular ROIs.
+		for (int width = 0; width < Region.at(1); width++)
+		{
+			for (int height = 0; height < Region.at(2); height++)
+			{
+				Average = Average + Perfusion_Image.at<double>(Location.at(1) + width, Location.at(2) + height);
+			}
+		}
+		ROI_Averages.at(i) = Average / (Region.at(1)*Region.at(2));
+	}
+	return(ROI_Averages);
+}
 

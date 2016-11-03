@@ -3,11 +3,12 @@ The Frame class and its public functions are declared here.
 */
 #pragma once
 #include <opencv/cv.h>
+#include "FlyCapture2.h"
 #include "Free-Functions.h"
 
 using namespace std;
 using namespace cv; // Alexandra: Mat is a data type in openCV, so we need to include cv here
-
+using namespace FlyCapture2;
 
 class Frame {
 private:
