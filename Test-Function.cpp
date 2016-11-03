@@ -235,6 +235,7 @@ void TestContrast()
 	key = 'i'; //Something else then q
 	while (key != 'q') //Loop until q is pressed
 	{
+
 		capture >> frame; //Takes a picture from the camera to the work memory
 						  //capture >> frame; //pause/delay/waiting causes some problems which are solved by doing this twice.
 		contrastmap = CalculateContrast(frame, 5);
@@ -258,6 +259,7 @@ void TestContrast()
 		{
 			video.write(frame);
 		}
+
 	}
 
 	return;
@@ -269,18 +271,19 @@ void TestContrast()
 void stilltest()
 {
 	Mat image1 = imread("images//3110_handnolaser_1.png");
-	Mat image2 = imread("images//3110_handwithlaser_1.png");
+	Mat image2;
 	Mat image3;
-	Mat image4;
+	namedWindow("C1", 1);
+	char k = 'e';
+	while (k != 'q')
+	{
+		
+		image2 = CalculateContrast(image1, 5);
 
-	image3 = RemoveAmbientLight(image1, image2,10);
-	image4 = CalculateContrast(image2, 15);
-	resize(image4, image4, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
-	imshow("Speckle", image3);
-	imshow("Kontrast", image4);
-
-	cvWaitKey(0);
-
+		image3 = CalculateContrast2(image1, 5);
+		
+		cvWaitKey(1);
+	}
 }
 
 
@@ -291,11 +294,13 @@ void stilltest2()
 	Mat image3;
 	Mat image4;
 
-	image3 = RemoveAmbientLight(image1, image2, 0);
+	image3 = RemoveAmbientLight(image1, image2, 100);
 	image4 = CalculateContrast(image2, 15);
 	resize(image4, image4, cv::Size(640, 480), 0, 0, cv::INTER_CUBIC);
 	imshow("Speckle", image3);
 	imshow("Kontrast", image2);
+	imshow("Base", image1);
+	imshow("asd", image4);
 
 	cvWaitKey(0);
 
@@ -377,29 +382,29 @@ void testcapture()
 {
 
 	cvNamedWindow("test1", 1);
-	cvNamedWindow("test2", 1);
+	//cvNamedWindow("test2", 1);
+	char k = 's';
+	Frame a("test", 640, 480, "Webcam", 5);
+	Mat temp1;
+	Mat temp2;
 
-	Frame a("test", 640, 480, "Webcam",5);
-	a.Take_Picture("BaseImage");
-	Mat temp1 = a.Get_Base_Image();
-	imshow("test2", temp1);
-	cvWaitKey(0);
-	a.Take_Picture("LaserImage");
+	while (k != 'q')
+	{
 
-	Mat temp2 = a.Get_Contrast_Image();
-	imshow("test1", temp2);
-	cvWaitKey(0);
+  		a.Take_Picture("BaseImage");
 
-	a.Take_Picture("BaseImage");
-	Mat temp3 = a.Get_Base_Image();
-	imshow("test2", temp3);
-	cvWaitKey(0);
-	a.Take_Picture("LaserImage");
+		 temp1 = a.Get_Base_Image();
+		 cout << temp1.empty() << endl;
+		imshow("test2", temp1);
+		for (int k = 0; k < 1;k++) {
+			a.Take_Picture("LaserImage");
+		}
+		temp2 = a.Get_Contrast_Image();
 
-	Mat temp4 = a.Get_Contrast_Image();
-	imshow("test1", temp4);
-	cvWaitKey(0);
-
-
+		if (temp2.empty()) { return; }
+		imshow("test1", temp2);
+		k = cvWaitKey(10);
+		
+	}
 
 }

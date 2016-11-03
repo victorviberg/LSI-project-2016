@@ -33,6 +33,8 @@ private:
 	Mat Temp_Matrix;
 	Image rgbImage;
 	Image rawImage;
+	vector<Mat> Temporary_Contrasts;
+	
 
 public:
 	void Set_Exposure_Times(vector<int>);

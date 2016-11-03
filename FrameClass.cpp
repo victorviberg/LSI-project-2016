@@ -48,12 +48,10 @@ void Frame::Add_Contrast_Image(Mat Input)
 {
 	Contrast_Images.push_back(Input);
 
-	if (Contrast_Images.size() > 5)
+	if (Contrast_Images.size() > Filter_Window_Size)
 	{
 		Contrast_Images.erase(Contrast_Images.begin()+0);
 	}
-	Contrast_Image = TemporalFiltering(Contrast_Images);
-
 }
 
 void Frame::Set_Filter_Window_Size(int value)
@@ -70,6 +68,14 @@ Mat Frame::Get_Laser_Image() {
 }
 
 Mat Frame::Get_Contrast_Image() {
+	for (int k = 0; k < Contrast_Images.size(); k++)
+	{
+		cout << k << endl;
+		Temporary_Contrasts.push_back(CalculateContrast2(Contrast_Images[k], Lasca_Area));
+	}
+
+	Contrast_Image = TemporalFiltering(Temporary_Contrasts);
+	Temporary_Contrasts.clear();
 	return Contrast_Image;
 }
 
@@ -111,13 +117,10 @@ void Frame::Take_Picture(string Type)
 		}
 		else if (Type == "LaserImage")
 		{
-			cvWaitKey(0);
-			Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
-			Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
+			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
+			//Temp_Matrix = CalculateContrast2(Temp_Matrix, Lasca_Area);
 			Add_Contrast_Image(Temp_Matrix);
 		}
-
-
 	}
 	else if (Which_Camera == "Fly") //This is untested. It alsod needs some renaming.
 	{
@@ -137,12 +140,27 @@ void Frame::Take_Picture(string Type)
 		else if (Type == "LaserImage")
 		{ 
 			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
-			Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
+			//Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
 			Add_Contrast_Image(Temp_Matrix);
 		}
 
 	}
-
+	else 
+	{
+		Web_Cam >> Temp_Matrix; //Double since it interacts wierdly with pauses.
+		Web_Cam >> Temp_Matrix;
+		if (Type == "BaseImage")
+		{
+			Web_Cam >> Base_Image;
+			Web_Cam >> Base_Image;
+		}
+		else if (Type == "LaserImage")
+		{
+			//Temp_Matrix = RemoveAmbientLight(Base_Image, Temp_Matrix, 0); //Don't know why this doesn't works right now
+			//Temp_Matrix = CalculateContrast(Temp_Matrix, Lasca_Area);
+			Add_Contrast_Image(Temp_Matrix);
+		}
+	}
 }
 
 
@@ -152,6 +170,7 @@ Frame::Frame(string File_Name, int Width, int Height, string Camera, int Lasca_S
 	Lasca_Area = Lasca_Size;
 	Averaged_Contrast_Filename = "Averaged_Contrast_" + File_Name;
 	Base_Filename = "Base_Filename_" + File_Name;
+	Filter_Window_Size = 2;
 
 	
 	Video_Contrast.open("images\\" + Averaged_Contrast_Filename +".avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, cv::Size(Width, Height), true);
@@ -169,5 +188,9 @@ Frame::Frame(string File_Name, int Width, int Height, string Camera, int Lasca_S
 		BW_Cam.Connect(0);
 		BW_Cam.StartCapture();
 	}
-
+	else
+	{
+		VideoCapture temp(Camera + ".avi");
+		Web_Cam = temp;
+	}
 }

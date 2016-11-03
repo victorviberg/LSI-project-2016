@@ -28,7 +28,8 @@ int main(int, char**)
 	//filtertest();
 	//testFrame();
 	testcapture();
-
+	//stilltest2();
+	//TestContrast();
 	return(0);
 
 }

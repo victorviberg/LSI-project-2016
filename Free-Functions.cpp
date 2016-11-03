@@ -52,20 +52,50 @@ cv::Mat CalculateContrast(cv::Mat input, int lascaSize) //There is some(read alo
 		for (int height_it = 0; height_it <= H - 1; height_it++)
 		{
 
-			
-			//cv::Mat tempLascaArea(input, cv::Range(lascaSize*width_it, lascaSize*(1 + height_itx)), cv::Range(lascaSize*height_it,lascaSize*(1+ height_it)));
 			cv::Mat tempLascaArea(input, cv::Range(lascaSize*height_it, lascaSize*(1 + height_it)), cv::Range(lascaSize*width_it, lascaSize*(1 + width_it)));
 			cv::meanStdDev(tempLascaArea, mean, std);
 			contrast = std.val[0] / mean.val[0] *255;
 			perfusionimage.at<uchar>(height_it, width_it) = contrast;
-			k++;
 		}
 
 	}
-	//cout << k;
 	resize(perfusionimage, perfusionimage, cv::Size(input.cols, input.rows), 0, 0, cv::INTER_CUBIC);
 	return perfusionimage;
 }
+
+cv::Mat CalculateContrast2(cv::Mat input, int lascaSize) //There is some(read alot) problems with the iteration 
+{
+
+	int H = input.rows / lascaSize; //Needs a way to make sure size is divisible by lascaSize
+	int W = input.cols / lascaSize; //As of now these are a bit misleading
+
+	cv::Mat perfusionimage = cv::Mat::ones(H, W, CV_8U);
+	cv::Mat perfusionimage2 = cv::Mat::ones(H, W, CV_8U);
+	cv::Scalar mean;
+	cv::Scalar std;
+	double contrast;
+	vector<double> temp;
+
+	uchar* p;
+	uchar* p2 = perfusionimage.ptr();
+	for (int width_it = 0; width_it < H -1 ; width_it++)
+	{
+		p = perfusionimage.ptr<uchar>(width_it);
+
+		for (int height_it = 0; height_it <= W - 1; height_it++)
+		{
+			//cv::Mat tempLascaArea(input, cv::Range(lascaSize*width_it, lascaSize*(1 + width_it)), cv::Range(lascaSize*height_it, lascaSize*(1 + height_it)));			
+			cv::meanStdDev(input(cv::Range(lascaSize*width_it, lascaSize*(1 + width_it)), cv::Range(lascaSize*height_it, lascaSize*(1 + height_it))), mean, std);
+			contrast = std.val[0] / mean.val[0] * 255;
+			p[height_it] = contrast;
+		}
+
+	}
+	resize(perfusionimage, perfusionimage, cv::Size(input.cols, input.rows), 0, 0, cv::INTER_CUBIC);
+	return perfusionimage;
+}
+
+
 
 cv::Mat TemporalFiltering(vector<cv::Mat> input)
 {
