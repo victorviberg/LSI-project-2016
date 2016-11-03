@@ -7,8 +7,6 @@ This document contains declarations of all functions not bound to a specific cla
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
-#include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
-
 #include <iostream>
 #include <chrono>
 #include <time.h>
@@ -17,21 +15,22 @@ This document contains declarations of all functions not bound to a specific cla
 #include <conio.h> 
 #include <vector>
 
+#include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
 #include "Test-Function.h"
-#include "FrameClass.h"
+//#include "FrameClass.h"
 #include "ROIclass.h"
 
-using namespace std;
-using namespace FlyCapture2;
+
+//using namespace std;
+//using namespace FlyCapture2;
 
 
-
-
-cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int threshhold);
+cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage, int threshhold);
 
 cv::Mat CalculateContrast(cv::Mat input, int lascaSize);
 
 cv::Mat TemporalFiltering(vector<cv::Mat> input);
 
-// vector<double> Calc_ROI_Average(Frame Current_Working_Frame, vector<ROI> The_List_Of_ROIs);
+class Frame;
+std::vector<double> Calc_ROI_Average(Frame *Current_Working_Frame, std::vector<ROI> The_List_Of_ROIs);
 

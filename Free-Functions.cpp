@@ -1,27 +1,27 @@
 /*
 This document contains functions not bound to a specific class.
 */
+#pragma once
+
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 
 #include "FlyCapture2.h" //This one will give errors unless camera thingy is fixed
+#include "Free-Functions.h"
 
 #include<iostream>
 #include <chrono>
 #include <time.h>
-#include <thread>
+//#include <thread>
 #include <windows.h>
 #include<conio.h> 
 
-#include "ROIclass.h"
-#include "FrameClass.h"
 
 
 using namespace std;
 using namespace FlyCapture2;
-
 
 //Substracts each pixel value in one images from the corresponding pixel value in another. Threshold is the lowset pixel value that is retained.
 cv::Mat RemoveAmbientLight(cv::Mat baseimage, cv::Mat laserimage,int threshhold)
@@ -85,8 +85,9 @@ cv::Mat TemporalFiltering(vector<cv::Mat> input)
 
 
 
-/*vector<double> Calc_ROI_Average(Frame Current_Working_Frame, vector<ROI> The_List_Of_ROIs) {
-	Mat Perfusion_Image = Current_Working_Frame.Get_Perfusion_Image();
+vector<double> Calc_ROI_Average(Frame *Current_Working_Frame, vector<ROI> The_List_Of_ROIs) 
+{
+	Mat Perfusion_Image = Current_Working_Frame->Get_Perfusion_Image();
 	vector<double> ROI_Averages;
 
 	for (int i = 0; i <= The_List_Of_ROIs.size(); i++)
@@ -107,5 +108,5 @@ cv::Mat TemporalFiltering(vector<cv::Mat> input)
 		ROI_Averages.at(i) = Average / (Region.at(1)*Region.at(2));
 	}
 	return(ROI_Averages);
-}*/
+}
 
